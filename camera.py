@@ -25,6 +25,8 @@ command = ""
 filename = ""
 #camera_pause  = "650"
 camera_pause  = "1000"
+folder = os.path.dirname(os.path.realpath(__file__))
+
 
 print("Raspberry Pi - Point & Shoot Camera v2.2")
 print("-with pygame and screen, and messaging")
@@ -40,7 +42,7 @@ screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
 
 width, height = screen.get_size()
 
-background = pygame.image.load("/home/pi/camera/homeimage.jpeg");
+background = pygame.image.load(folder+"/homeimage.jpeg");
 background.convert_alpha()
 background = pygame.transform.scale(background,(width,height))
 
@@ -49,7 +51,7 @@ background = pygame.transform.scale(background,(width,height))
 screen.blit(background,(0,0),(0,0,width,height))
 
 #logo = pygame.image.load("rpilogo.jpeg");
-logo = pygame.image.load("/home/pi/camera/raspberrypilogo.png")
+logo = pygame.image.load(folder+"/raspberrypilogo.png")
 
 logo = pygame.transform.scale(logo,(150,200))
 
@@ -86,13 +88,13 @@ def loadpic(imageName):
     textsurface = font.render(imageName, 1, pygame.Color(0,0,0))
     screen.blit(textsurface,(20,0))
 
-    logo = pygame.image.load("/home/pi/camera/raspberrypilogo.png")
+    logo = pygame.image.load(folder+"/raspberrypilogo.png")
     logo = pygame.transform.scale(logo,(75,100))
     screen.blit(logo,(20,300))
     
 
 def movepic(imageName):
-    command = "sudo mv " + imageName + " /home/pi/camera/images/" + imageName
+    command = "sudo mv %s %s/%s" % (imageName, folder, imageName)
     print(command)
     os.system(command)
 
