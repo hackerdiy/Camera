@@ -7,11 +7,13 @@ import subprocess
 import datetime
 import pygame
 from pygame.locals import *
-
+os.putenv('SDL_VIDEODRIVER', 'fbcon')
+os.putenv('SDL_FBDEV'      , '/dev/fb1')
 
 #setup pins
+pin = 18
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(24,GPIO.IN)
+GPIO.setup(pin,GPIO.IN)
 
 #setup variables
 count = 0
@@ -52,9 +54,9 @@ logo = pygame.transform.scale(logo,(150,200))
 screen.blit(logo,(20,0))
 
 
-font = pygame.font.SysFont("verdana", 65, bold=1)
+font = pygame.font.SysFont("verdana", 12, bold=1)
 
-font2 = pygame.font.SysFont("verdana", 55, bold=0)
+font2 = pygame.font.SysFont("verdana", 10, bold=0)
 textsurface = font.render("Raspberry Pi", 1, pygame.Color(255,255,255))
 screen.blit(textsurface,(20,280))
 textsurface = font2.render("Point & Shoot Camera", 1, pygame.Color(255,255,255))
@@ -78,7 +80,7 @@ def loadpic(imageName):
     background = pygame.transform.scale(background,(width,height))
     screen.blit(background,(0,0),(0,0,width,height))
 
-    font = pygame.font.SysFont("verdana", 40, bold=0)
+    font = pygame.font.SysFont("verdana", 12, bold=0)
     textsurface = font.render(imageName, 1, pygame.Color(0,0,0))
     screen.blit(textsurface,(20,0))
 
@@ -96,7 +98,7 @@ def movepic(imageName):
 def writemessage(message):
     screen.fill(pygame.Color(0,0,0))
     #screen.blit(background,(0,0),(0,0,width,height))
-    font = pygame.font.SysFont("verdana", 50, bold=1)
+    font = pygame.font.SysFont("verdana", 12, bold=1)
     textsurface = font.render(message, 1, pygame.Color(255,255,255))
     screen.blit(textsurface,(35,40))
     pygame.display.update()
@@ -105,8 +107,8 @@ def writemessage(message):
     
 while running:
     if(up == True):
-        if(GPIO.input(24)==False):
-            print("button 24 pressed")
+        if(GPIO.input(pin)==False):
+            print("button "+pin+" pressed")
             now = datetime.datetime.now()
             timeString = now.strftime("%Y-%m-%d_%H:%M:%S")
             print("request received: " + timeString)
