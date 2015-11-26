@@ -7,6 +7,8 @@ import subprocess
 import datetime
 import pygame
 from pygame.locals import *
+
+# Add os ENV
 os.putenv('SDL_VIDEODRIVER', 'fbcon')
 os.putenv('SDL_FBDEV'      , '/dev/fb1')
 
